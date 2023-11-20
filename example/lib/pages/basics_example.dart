@@ -16,6 +16,19 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
 
+  CalendarStyle calendarStyle = CalendarStyle(
+    defaultTextStyle: TextStyle(fontSize: 20),
+    defaultTextStyleSmall: TextStyle(fontSize: 12),
+    weekendTextStyle:
+        const TextStyle(color: const Color(0xFF5A5A5A), fontSize: 20),
+    weekendTextStyleSmall:
+        const TextStyle(color: const Color(0xFF5A5A5A), fontSize: 12),
+    outsideTextStyle:
+        const TextStyle(color: const Color(0xFFAEAEAE), fontSize: 20),
+    outsideTextStyleSmall:
+        const TextStyle(color: const Color(0xFFAEAEAE), fontSize: 12),
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +40,9 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
         lastDay: kLastDay,
         focusedDay: _focusedDay,
         calendarFormat: _calendarFormat,
+        calendarStyle: calendarStyle,
+        rowHeight: 60,
+        startingDayOfWeek: StartingDayOfWeek.monday,
         selectedDayPredicate: (day) {
           // Use `selectedDayPredicate` to determine which day is currently selected.
           // If this returns true, then `day` will be marked as selected.

@@ -73,30 +73,35 @@ class CalendarStyle {
 
   /// TextStyle for a day cell that matches the current day.
   final TextStyle todayTextStyle;
+  final TextStyle todayTextStyleSmall;
 
   /// Decoration for a day cell that matches the current day.
   final Decoration todayDecoration;
 
   /// TextStyle for day cells that are currently marked as selected by `selectedDayPredicate`.
   final TextStyle selectedTextStyle;
+  final TextStyle selectedTextStyleSmall;
 
   /// Decoration for day cells that are currently marked as selected by `selectedDayPredicate`.
   final Decoration selectedDecoration;
 
   /// TextStyle for a day cell that is the start of current range selection.
   final TextStyle rangeStartTextStyle;
+  final TextStyle rangeStartTextStyleSmall;
 
   /// Decoration for a day cell that is the start of current range selection.
   final Decoration rangeStartDecoration;
 
   /// TextStyle for a day cell that is the end of current range selection.
   final TextStyle rangeEndTextStyle;
+  final TextStyle rangeEndTextStyleSmall;
 
   /// Decoration for a day cell that is the end of current range selection.
   final Decoration rangeEndDecoration;
 
   /// TextStyle for day cells that fall within the currently selected range.
   final TextStyle withinRangeTextStyle;
+  final TextStyle withinRangeTextStyleSmall;
 
   /// Decoration for day cells that fall within the currently selected range.
   final Decoration withinRangeDecoration;
@@ -104,6 +109,7 @@ class CalendarStyle {
   /// TextStyle for day cells, of which the `day.month` is different than `focusedDay.month`.
   /// This will affect day cells that do not match the currently focused month.
   final TextStyle outsideTextStyle;
+  final TextStyle outsideTextStyleSmall;
 
   /// Decoration for day cells, of which the `day.month` is different than `focusedDay.month`.
   /// This will affect day cells that do not match the currently focused month.
@@ -114,6 +120,7 @@ class CalendarStyle {
   /// This refers to dates disabled by returning false in `enabledDayPredicate`,
   /// as well as dates that are outside of the bounds set up by `firstDay` and `lastDay`.
   final TextStyle disabledTextStyle;
+  final TextStyle disabledTextStyleSmall;
 
   /// Decoration for day cells that have been disabled.
   ///
@@ -123,12 +130,14 @@ class CalendarStyle {
 
   /// TextStyle for day cells that are marked as holidays by `holidayPredicate`.
   final TextStyle holidayTextStyle;
+  final TextStyle holidayTextStyleSmall;
 
   /// Decoration for day cells that are marked as holidays by `holidayPredicate`.
   final Decoration holidayDecoration;
 
   /// TextStyle for day cells that match `weekendDay` list.
   final TextStyle weekendTextStyle;
+  final TextStyle weekendTextStyleSmall;
 
   /// Decoration for day cells that match `weekendDay` list.
   final Decoration weekendDecoration;
@@ -138,6 +147,7 @@ class CalendarStyle {
 
   /// TextStyle for day cells that do not match any other styles.
   final TextStyle defaultTextStyle;
+  final TextStyle defaultTextStyleSmall;
 
   /// Decoration for day cells that do not match any other styles.
   final Decoration defaultDecoration;
@@ -176,6 +186,10 @@ class CalendarStyle {
     this.todayTextStyle = const TextStyle(
       color: const Color(0xFFFAFAFA),
       fontSize: 16.0,
+    ), 
+    this.todayTextStyleSmall = const TextStyle(
+      color: const Color(0xFFFAFAFA),
+      fontSize: 12.0,
     ), //
     this.todayDecoration = const BoxDecoration(
       color: const Color(0xFF9FA8DA),
@@ -185,6 +199,10 @@ class CalendarStyle {
       color: const Color(0xFFFAFAFA),
       fontSize: 16.0,
     ),
+    this.selectedTextStyleSmall = const TextStyle(
+      color: const Color(0xFFFAFAFA),
+      fontSize: 12.0,
+    ),
     this.selectedDecoration = const BoxDecoration(
       color: const Color(0xFF5C6BC0),
       shape: BoxShape.circle,
@@ -192,6 +210,10 @@ class CalendarStyle {
     this.rangeStartTextStyle = const TextStyle(
       color: const Color(0xFFFAFAFA),
       fontSize: 16.0,
+    ),
+    this.rangeStartTextStyleSmall = const TextStyle(
+      color: const Color(0xFFFAFAFA),
+      fontSize: 12.0,
     ),
     this.rangeStartDecoration = const BoxDecoration(
       color: const Color(0xFF6699FF),
@@ -201,17 +223,25 @@ class CalendarStyle {
       color: const Color(0xFFFAFAFA),
       fontSize: 16.0,
     ),
+    this.rangeEndTextStyleSmall = const TextStyle(
+      color: const Color(0xFFFAFAFA),
+      fontSize: 12.0,
+    ),
     this.rangeEndDecoration = const BoxDecoration(
       color: const Color(0xFF6699FF),
       shape: BoxShape.circle,
     ),
     this.withinRangeTextStyle = const TextStyle(),
+    this.withinRangeTextStyleSmall = const TextStyle(),
     this.withinRangeDecoration = const BoxDecoration(shape: BoxShape.circle),
     this.outsideTextStyle = const TextStyle(color: const Color(0xFFAEAEAE)),
+    this.outsideTextStyleSmall = const TextStyle(color: const Color(0xFFAEAEAE)),
     this.outsideDecoration = const BoxDecoration(shape: BoxShape.circle),
     this.disabledTextStyle = const TextStyle(color: const Color(0xFFBFBFBF)),
+    this.disabledTextStyleSmall = const TextStyle(color: const Color(0xFFBFBFBF)),
     this.disabledDecoration = const BoxDecoration(shape: BoxShape.circle),
     this.holidayTextStyle = const TextStyle(color: const Color(0xFF5C6BC0)),
+    this.holidayTextStyleSmall = const TextStyle(color: const Color(0xFF5C6BC0)),
     this.holidayDecoration = const BoxDecoration(
       border: const Border.fromBorderSide(
         const BorderSide(color: const Color(0xFF9FA8DA), width: 1.4),
@@ -219,10 +249,12 @@ class CalendarStyle {
       shape: BoxShape.circle,
     ),
     this.weekendTextStyle = const TextStyle(color: const Color(0xFF5A5A5A)),
+    this.weekendTextStyleSmall = const TextStyle(color: const Color(0xFF5A5A5A)),
     this.weekendDecoration = const BoxDecoration(shape: BoxShape.circle),
     this.weekNumberTextStyle =
         const TextStyle(fontSize: 12, color: const Color(0xFFBFBFBF)),
     this.defaultTextStyle = const TextStyle(),
+    this.defaultTextStyleSmall = const TextStyle(),
     this.defaultDecoration = const BoxDecoration(shape: BoxShape.circle),
     this.rowDecoration = const BoxDecoration(),
     this.tableBorder = const TableBorder(),
