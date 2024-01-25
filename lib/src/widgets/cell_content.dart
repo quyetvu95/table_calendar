@@ -3,6 +3,7 @@
 
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
+import 'package:table_calendar/src/utils/lunar_solar_utils.dart';
 
 import '../customization/calendar_builders.dart';
 import '../customization/calendar_style.dart';
@@ -65,8 +66,14 @@ class CellContent extends StatelessWidget {
     final padding = calendarStyle.cellPadding;
     final alignment = calendarStyle.cellAlignment;
     final duration = const Duration(milliseconds: 250);
+    final resultConvert = convertSolar2Lunar(day.day, day.month, day.year, 7);
+    final dayLunar = resultConvert[0];
+    var textLunar = dayLunar.toString();
+    if(dayLunar == 1){
+      textLunar = textLunar + '/' + resultConvert[1].toString();
+    }
 
-    Widget verticalMargin = const SizedBox(height: 4);
+    Widget verticalMargin = const SizedBox(height: 0);
 
     if (isDisabled) {
       cell = calendarBuilders.disabledBuilder?.call(context, day, focusedDay) ??
@@ -81,7 +88,7 @@ class CellContent extends StatelessWidget {
               children: [
                 Text(text, style: calendarStyle.disabledTextStyle),
                 verticalMargin,
-                Text(text, style: calendarStyle.disabledTextStyleSmall),
+                Text(textLunar, style: calendarStyle.disabledTextStyleSmall),
               ],
             ),
           );
@@ -98,28 +105,28 @@ class CellContent extends StatelessWidget {
               children: [
                 Text(text, style: calendarStyle.selectedTextStyle),
                 verticalMargin,
-                Text(text, style: calendarStyle.selectedTextStyleSmall),
+                Text(textLunar, style: calendarStyle.selectedTextStyleSmall),
               ],
             ),
           );
     } else if (isRangeStart) {
-      cell =
-          calendarBuilders.rangeStartBuilder?.call(context, day, focusedDay) ??
-              AnimatedContainer(
-                duration: duration,
-                margin: margin,
-                padding: padding,
-                decoration: calendarStyle.rangeStartDecoration,
-                alignment: alignment,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(text, style: calendarStyle.rangeStartTextStyle),
-                    verticalMargin,
-                    Text(text, style: calendarStyle.rangeStartTextStyleSmall),
-                  ],
-                ),
-              );
+      cell = calendarBuilders.rangeStartBuilder
+              ?.call(context, day, focusedDay) ??
+          AnimatedContainer(
+            duration: duration,
+            margin: margin,
+            padding: padding,
+            decoration: calendarStyle.rangeStartDecoration,
+            alignment: alignment,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(text, style: calendarStyle.rangeStartTextStyle),
+                verticalMargin,
+                Text(textLunar, style: calendarStyle.rangeStartTextStyleSmall),
+              ],
+            ),
+          );
     } else if (isRangeEnd) {
       cell = calendarBuilders.rangeEndBuilder?.call(context, day, focusedDay) ??
           AnimatedContainer(
@@ -133,7 +140,7 @@ class CellContent extends StatelessWidget {
               children: [
                 Text(text, style: calendarStyle.rangeEndTextStyle),
                 verticalMargin,
-                Text(text, style: calendarStyle.rangeEndTextStyleSmall),
+                Text(textLunar, style: calendarStyle.rangeEndTextStyleSmall),
               ],
             ),
           );
@@ -150,7 +157,7 @@ class CellContent extends StatelessWidget {
               children: [
                 Text(text, style: calendarStyle.todayTextStyle),
                 verticalMargin,
-                Text(text, style: calendarStyle.todayTextStyleSmall),
+                Text(textLunar, style: calendarStyle.todayTextStyleSmall),
               ],
             ),
           );
@@ -167,28 +174,28 @@ class CellContent extends StatelessWidget {
               children: [
                 Text(text, style: calendarStyle.holidayTextStyle),
                 verticalMargin,
-                Text(text, style: calendarStyle.holidayTextStyleSmall),
+                Text(textLunar, style: calendarStyle.holidayTextStyleSmall),
               ],
             ),
           );
     } else if (isWithinRange) {
-      cell =
-          calendarBuilders.withinRangeBuilder?.call(context, day, focusedDay) ??
-              AnimatedContainer(
-                duration: duration,
-                margin: margin,
-                padding: padding,
-                decoration: calendarStyle.withinRangeDecoration,
-                alignment: alignment,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(text, style: calendarStyle.withinRangeTextStyle),
-                    verticalMargin,
-                    Text(text, style: calendarStyle.withinRangeTextStyleSmall),
-                  ],
-                ),
-              );
+      cell = calendarBuilders.withinRangeBuilder
+              ?.call(context, day, focusedDay) ??
+          AnimatedContainer(
+            duration: duration,
+            margin: margin,
+            padding: padding,
+            decoration: calendarStyle.withinRangeDecoration,
+            alignment: alignment,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(text, style: calendarStyle.withinRangeTextStyle),
+                verticalMargin,
+                Text(textLunar, style: calendarStyle.withinRangeTextStyleSmall),
+              ],
+            ),
+          );
     } else if (isOutside) {
       cell = calendarBuilders.outsideBuilder?.call(context, day, focusedDay) ??
           AnimatedContainer(
@@ -202,7 +209,7 @@ class CellContent extends StatelessWidget {
               children: [
                 Text(text, style: calendarStyle.outsideTextStyle),
                 verticalMargin,
-                Text(text, style: calendarStyle.outsideTextStyleSmall),
+                Text(textLunar, style: calendarStyle.outsideTextStyleSmall),
               ],
             ),
           );
@@ -227,7 +234,7 @@ class CellContent extends StatelessWidget {
                 ),
                 verticalMargin,
                 Text(
-                  text,
+                  textLunar,
                   style: isWeekend
                       ? calendarStyle.weekendTextStyleSmall
                       : calendarStyle.defaultTextStyleSmall,
