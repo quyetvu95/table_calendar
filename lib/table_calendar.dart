@@ -9,3 +9,4 @@ export 'src/shared/utils.dart';
 export 'src/table_calendar.dart';
 export 'src/table_calendar_base.dart';
 export 'src/utils/lunar_solar_utils.dart';
+export 'src/utils/date_utils.dart';
