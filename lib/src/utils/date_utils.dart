@@ -1,22 +1,22 @@
 
 String getNameDayOfWeek(DateTime date) {
   if(date.weekday == DateTime.monday) {
-    return "Thứ 2";
+    return "Thứ Hai";
   }
   if(date.weekday == DateTime.tuesday) {
-    return "Thứ 3";
+    return "Thứ Ba";
   }
   if(date.weekday == DateTime.wednesday) {
-    return "Thứ 4";
+    return "Thứ Tư";
   }
   if(date.weekday == DateTime.thursday) {
-    return "Thứ 5";
+    return "Thứ Năm";
   }
   if(date.weekday == DateTime.friday) {
-    return "Thứ 6";
+    return "Thứ Sáu";
   }
   if(date.weekday == DateTime.saturday) {
-    return "Thứ 7";
+    return "Thứ Bảy";
   }
     return "Chủ Nhật";
 }
