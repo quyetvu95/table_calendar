@@ -126,7 +126,8 @@ int jdFromDate(int dd, int mm, int yy) {
   var a = (14 - mm) ~/ 12;
   var y = yy + 4800 - a;
   var m = mm + 12 * a - 3;
-  var jd = dd + (153 * m + 2) ~/ 5 + 365 * y + y ~/ 4 - y ~/ 100 + y ~/ 400 - 32045;
+  var jd =
+      dd + (153 * m + 2) ~/ 5 + 365 * y + y ~/ 4 - y ~/ 100 + y ~/ 400 - 32045;
   if (jd < 2299161) {
     jd = dd + (153 * m + 2) ~/ 5 + 365 * y + y ~/ 4 - 32083;
   }
@@ -136,7 +137,8 @@ int jdFromDate(int dd, int mm, int yy) {
 /* Convert a Julian day number to day/month/year. Parameter jd is an integer */
 List<int> jdToDate(int jd) {
   var a, b, c, d, e, m;
-  if (jd > 2299160) { // After 5/10/1582, Gregorian calendar
+  if (jd > 2299160) {
+    // After 5/10/1582, Gregorian calendar
     a = jd + 32044;
     b = (4 * a + 3) ~/ 146097;
     c = a - (b * 146097) ~/ 4;
@@ -164,20 +166,24 @@ double newMoon(int k) {
   var T = k / 1236.85; // Time in Julian centuries from 1900 January 0.5
   var T2 = T * T;
   var T3 = T2 * T;
-  var dr = pi / 180; 
+  var dr = pi / 180;
   var Jd1 = 2415020.75933 + 29.53058868 * k + 0.0001178 * T2 - 0.000000155 * T3;
-  Jd1 += 0.00033 * sin((166.56 + 132.87 * T - 0.009173 * T2) * dr); 
+  Jd1 += 0.00033 * sin((166.56 + 132.87 * T - 0.009173 * T2) * dr);
 
-  var M = 359.2242 + 29.10535608 * k - 0.0000333 * T2 - 0.00000347 * T3; 
-  var Mpr = 306.0253 + 385.81691806 * k + 0.0107306 * T2 + 0.00001236 * T3; 
-  var F = 21.2964 + 390.67050646 * k - 0.0016528 * T2 - 0.00000239 * T3; 
+  var M = 359.2242 + 29.10535608 * k - 0.0000333 * T2 - 0.00000347 * T3;
+  var Mpr = 306.0253 + 385.81691806 * k + 0.0107306 * T2 + 0.00001236 * T3;
+  var F = 21.2964 + 390.67050646 * k - 0.0016528 * T2 - 0.00000239 * T3;
 
   var C1 = (0.1734 - 0.000393 * T) * sin(M * dr) + 0.0021 * sin(2 * dr * M);
   C1 -= 0.4068 * sin(Mpr * dr) + 0.0161 * sin(dr * 2 * Mpr);
   // ... (Rest of C1 calculation)
 
-  var deltat = (T < -11) 
-      ? 0.001 + 0.000839 * T + 0.0002261 * T2 - 0.00000845 * T3 - 0.000000081 * T * T3
+  var deltat = (T < -11)
+      ? 0.001 +
+          0.000839 * T +
+          0.0002261 * T2 -
+          0.00000845 * T3 -
+          0.000000081 * T * T3
       : -0.000278 + 0.000265 * T + 0.000262 * T2;
 
   var JdNew = Jd1 + C1 - deltat;
@@ -189,16 +195,20 @@ double newMoon(int k) {
  * Algorithm from: "Astronomical Algorithms" by Jean Meeus, 1998
  */
 double sunLongitude(double jdn) {
-  var T = (jdn - 2451545.0) / 36525; // Time in Julian centuries 
+  var T = (jdn - 2451545.0) / 36525; // Time in Julian centuries
   var T2 = T * T;
   var dr = pi / 180; // degree to radian
 
-  var M = 357.52910 + 35999.05030 * T - 0.0001559 * T2 - 0.00000048 * T * T2; // mean anomaly
+  var M = 357.52910 +
+      35999.05030 * T -
+      0.0001559 * T2 -
+      0.00000048 * T * T2; // mean anomaly
 
   var L0 = 280.46645 + 36000.76983 * T + 0.0003032 * T2; // mean longitude
 
   var DL = (1.914600 - 0.004817 * T - 0.000014 * T2) * sin(dr * M);
-  DL += (0.019993 - 0.000101 * T) * sin(dr * 2 * M) + 0.000290 * sin(dr * 3 * M); 
+  DL +=
+      (0.019993 - 0.000101 * T) * sin(dr * 2 * M) + 0.000290 * sin(dr * 3 * M);
 
   var L = L0 + DL; // true longitude
   L = L * dr; // Convert to radians
@@ -218,10 +228,10 @@ int getSunLongitude(double dayNumber, double timeZone) {
   var adjustedDayNumber = dayNumber - 0.5 - timeZone / 24;
 
   // Calculate Sun's longitude (assuming you have the 'sunLongitude' function translated)
-  var longitudeRadians = sunLongitude(adjustedDayNumber);  
+  var longitudeRadians = sunLongitude(adjustedDayNumber);
 
-  // Convert longitude from radians to sixths of a circle and return as integer 
-  return (longitudeRadians / pi * 6).floor();  
+  // Convert longitude from radians to sixths of a circle and return as integer
+  return (longitudeRadians / pi * 6).floor();
 }
 
 /* Compute the day of the k-th new moon in the given time zone.
@@ -229,15 +239,16 @@ int getSunLongitude(double dayNumber, double timeZone) {
  */
 int getNewMoonDay(int k, double timeZone) {
   var julianDateOfNewMoon = newMoon(k) + 0.5 + timeZone / 24;
-  return julianDateOfNewMoon.floor(); // Or .toInt() if you're certain it'll always be whole
+  return julianDateOfNewMoon
+      .floor(); // Or .toInt() if you're certain it'll always be whole
 }
 
 /* Find the day that starts the luner month 11 of the given year for the given time zone */
 int getLunarMonth11(int yy, double timeZone) {
   var off = jdFromDate(31, 12, yy) - 2415021;
-  var k = (off / 29.530588853).floor(); 
-  var nm = getNewMoonDay(k, timeZone); 
-  var sunLong = getSunLongitude(nm.toDouble(), timeZone); 
+  var k = (off / 29.530588853).floor();
+  var nm = getNewMoonDay(k, timeZone);
+  var sunLong = getSunLongitude(nm.toDouble(), timeZone);
 
   if (sunLong >= 9) {
     nm = getNewMoonDay(k - 1, timeZone);
@@ -249,9 +260,10 @@ int getLunarMonth11(int yy, double timeZone) {
 /* Find the index of the leap month after the month starting on the day a11. */
 int getLeapMonthOffset(int a11, double timeZone) {
   var k = ((a11 - 2415021.076998695) / 29.530588853 + 0.5).floor();
-  var last = 0; 
-  var i = 1; 
-  var arc = getSunLongitude(getNewMoonDay(k + i, timeZone).toDouble(), timeZone);
+  var last = 0;
+  var i = 1;
+  var arc =
+      getSunLongitude(getNewMoonDay(k + i, timeZone).toDouble(), timeZone);
 
   do {
     last = arc;
@@ -264,14 +276,23 @@ int getLeapMonthOffset(int a11, double timeZone) {
 
 /* Comvert solar date dd/mm/yyyy to the corresponding lunar date */
 List<int> convertSolar2Lunar(int dd, int mm, int yy, double timeZone) {
-  var k, dayNumber, monthStart, a11, b11, lunarDay, lunarMonth, lunarYear, lunarLeap;
+  var k,
+      dayNumber,
+      monthStart,
+      a11,
+      b11,
+      lunarDay,
+      lunarMonth,
+      lunarYear,
+      lunarLeap;
+  lunarLeap = 0;
 
   // Calculate Julian Day Number
-  dayNumber = jdFromDate(dd, mm, yy); 
+  dayNumber = jdFromDate(dd, mm, yy);
 
   // Find New Moon day within the month
   k = ((dayNumber - 2415021.076998695) / 29.530588853).floor();
-  monthStart = getNewMoonDay(k + 1, timeZone); 
+  monthStart = getNewMoonDay(k + 1, timeZone);
   if (monthStart > dayNumber) {
     monthStart = getNewMoonDay(k, timeZone);
   }
@@ -289,7 +310,7 @@ List<int> convertSolar2Lunar(int dd, int mm, int yy, double timeZone) {
 
   // Calculate Lunar Day and Month
   lunarDay = dayNumber - monthStart + 1;
-  var diff = ((monthStart - a11) / 29).floor(); 
+  var diff = ((monthStart - a11) / 29).floor();
   lunarMonth = diff + 11;
 
   // Leap Month Calculation
@@ -298,7 +319,7 @@ List<int> convertSolar2Lunar(int dd, int mm, int yy, double timeZone) {
     if (diff >= leapMonthDiff) {
       lunarMonth = diff + 10;
       if (diff == leapMonthDiff) {
-        lunarLeap = 1; 
+        lunarLeap = 1;
       }
     }
   }
@@ -311,11 +332,12 @@ List<int> convertSolar2Lunar(int dd, int mm, int yy, double timeZone) {
     lunarYear -= 1;
   }
 
-  return [lunarDay, lunarMonth, lunarYear, lunarLeap]; 
+  return [lunarDay, lunarMonth, lunarYear, lunarLeap];
 }
 
 /* Convert a lunar date to the corresponding solar date */
-List<int> convertLunar2Solar(int lunarDay, int lunarMonth, int lunarYear, int lunarLeap, double timeZone) {
+List<int> convertLunar2Solar(int lunarDay, int lunarMonth, int lunarYear,
+    int lunarLeap, double timeZone) {
   var k, a11, b11, off, leapOff, leapMonth, monthStart;
 
   // Determine a11 and b11 for Lunar Year Calculation
@@ -350,7 +372,7 @@ List<int> convertLunar2Solar(int lunarDay, int lunarMonth, int lunarYear, int lu
 
   // Determine Month Start and Convert Back to Solar Date
   monthStart = getNewMoonDay(k + off, timeZone);
-  return jdToDate(monthStart + lunarDay - 1); 
+  return jdToDate(monthStart + lunarDay - 1);
 }
 
 getCanChiYear(int year) {
