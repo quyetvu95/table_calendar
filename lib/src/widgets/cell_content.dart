@@ -69,8 +69,15 @@ class CellContent extends StatelessWidget {
     final resultConvert = convertSolar2Lunar(day.day, day.month, day.year, 7);
     final dayLunar = resultConvert[0];
     var textLunar = dayLunar.toString();
-    if(dayLunar == 1){
+    bool isEnough = isLunarMonthEnough(
+        resultConvert[1], resultConvert[2], resultConvert[3]);
+    if (dayLunar == 1) {
       textLunar = textLunar + '/' + resultConvert[1].toString();
+      if (isEnough) {
+        textLunar += " Đ";
+      }else {
+        textLunar += " T";
+      }
     }
 
     Widget verticalMargin = const SizedBox(height: 0);
