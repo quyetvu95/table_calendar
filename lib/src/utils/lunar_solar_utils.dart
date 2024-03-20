@@ -501,3 +501,11 @@ String getCanchiMonth(DateTime dateTime) {
   var lunarMonthName = getCanChiMonth(lunarMonth, lunarYear);
   return lunarMonthName;
 }
+
+bool isLunarMonthEnough(int month, int year, int leap) {
+  var list = convertLunar2Solar(1, month, year, leap, 7);
+  var solarDate = DateTime(list[2], list[1], list[0]);
+  var date2 = solarDate.add(Duration(days: 29));
+  var list2 = convertSolar2Lunar(date2.day, date2.month, date2.year, 7);
+  return list2[0] != 1;
+}
